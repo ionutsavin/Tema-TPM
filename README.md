@@ -1,7 +1,7 @@
 # Tema-TPM
 
 # Exercitul 1
-Secventa este linearizabila si putem demonstra prin aceasta ordonare
+Secventa este linearizabila si putem demonstra prin aceasta ordonare:
 
 1. Pasul 1
 - Thread-ul B face apelul de write(1) -> r=1
@@ -26,7 +26,7 @@ Consideram secventa de executie:
 
  B_r.write(1) -> A_r.read():1 -> A_r.read():1 -> A_r.read():1 -> C_r.write(2) -> B_r.read():2  -> C_r.write(2) -> B_r.read():2
 
-Pentru aceasta executie, secventa data este Consistent secventiala deoarece am respectat ordinea de executie a metodelor din fiecare thread.
+Pentru aceasta executie, secventa data este consistent secventiala deoarece am respectat ordinea de executie a metodelor din fiecare thread.
 
 # Exercitiul 2
 Se prefera sa pui lock() inainte de try deoarece este mai sigur. Daca lock() arunca o exceptie (sa zicem ca nu reuseste sa obtina lock-ul), codul din try nu va mai rula deloc conform documentatiei Java, si astfel nu trebuie sa ne facem griji ca unlock() va fi apelat din greseala. In schimb, daca lock() e in try si se obtine o eroare, se va ajunge in finally, unde unlock() va incerca sa elibereze un lock care n-a fost obtinut, ceea ce poate cauza probleme.
@@ -35,7 +35,7 @@ Se prefera sa pui lock() inainte de try deoarece este mai sigur. Daca lock() aru
 ## Explicatie
 Algoritmul Bakery asigura o ordine corecta de acces pentru fiecare thread in sectiunea critica.
 Indicele (de exemplu "i") reprezinta un id al thread-ului, iar label pe post de eticheta. Comparatia tuplelor poate fi rescrisa astfel:
-if label[i] > label[k] or (label[i] == label[k] and i > k). Eticheta label[i] este utilizata pentru a reprezenta ordinea de sosire a fiecarui thread. Cand un thread vrea sa intre in sectiunea critica, isi seteaza label[i] la max(label[0], ..., label[n-1]) + 1. Totusi, este posibil ca doua thread-uri sa obtina aceeasi valoare. Astfel, daca am compara doar etichetele (label-urile) doua thread-uri cu aceiasi eticheta nu are avea o metoda de a decide cine are prioritate, de aceea algoritmul Bakery compara si indicele lor, bazandu-se pe o ordonare lexicografica, pentru a stabili cine are acces la sectiunea critica.
+```if label[i] > label[k] or (label[i] == label[k] and i > k)```. Eticheta label[i] este utilizata pentru a reprezenta ordinea de sosire a fiecarui thread. Cand un thread vrea sa intre in sectiunea critica, isi seteaza label[i] la max(label[0], ..., label[n-1]) + 1. Totusi, este posibil ca doua thread-uri sa obtina aceeasi valoare. Astfel, daca am compara doar etichetele (label-urile) doua thread-uri cu aceiasi eticheta nu ar avea o metoda de a decide cine are prioritate, de aceea algoritmul Bakery compara si indicele lor, bazandu-se pe o ordonare lexicografica, pentru a stabili cine are acces la sectiunea critica.
 
 ## Exemplu
 Fie 2 thread-uri T1 T2.
@@ -51,7 +51,7 @@ Avem 3 thread-uri T1, T2 si T3 care incearca sa obtina lock-ul:
 3. T2 intra in prima bucla si seteaza turn = me
 4. T3 intra in prima bucla si seteaza turn = me
 5. T2 intra in al doilea loop si verifica used. Avand in vedere ca used este true (setat de T1), T2 va ramane blocat in bucla.
-6. T3 intra in al doilea loop si verifica used. Avand in vedere ca used este true (setat de T2), T3 va ramane blocat in bucla.
+6. T3 intra in al doilea loop si verifica used. Avand in vedere ca used este true (setat de T1), T3 va ramane blocat in bucla.
 7. T1 da release la lock si used va deveni false.
 8. T2 iese din al doilea loop si va seta din nou used ca si true, dar va ramane blocat in primul loop deoarece turn = T3.
 9. T3 va ramane in al doilea loop blocat deoarece used este true setat de T2 acum.
