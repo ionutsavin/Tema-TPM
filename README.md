@@ -1,5 +1,7 @@
 # Tema-TPM
 
+### Tema realizata de Morarasu Catalin si Savin Ionut
+
 # Exercitul 1
 Secventa este linearizabila si putem demonstra prin aceasta ordonare:
 
