@@ -103,5 +103,40 @@ Deci, datorita faptului ca atribuirea ```getWhite = true;``` poate fi facuta de 
 ![image](https://github.com/user-attachments/assets/d4d241d9-d4c9-4a31-9b1c-140a871124e8)
 
 # Exercitiul 5
+Algoritmul lui Peterson pentru n thread uri nu asigura proprietatea de fairness deoarece un thread cu un identificator mai mic poate bloca un thread cu un identificator mai mare, chiar daca cel din urma a solicitat accesul mai devreme, acest lucru ducand la o situatie de starvation.
+Un trace de executie pentru demonstra:
+1. Thread 0 intra in lock:
+  
+	```level[0] = 1```
+
+	```victim[1] = 0```
+- While ul verifica daca exista un thread cu level >= 1, conditia e falsa deci Thread 0 continua
+
+2. Thread 1 intra in lock:
+  
+	```level[1] = 1```
+
+	```victim[1] = 1```
+- Dupa while Thread 1 este blocat, deoarece Thread 0 are level = 1
+
+3. Thread 2 intra in lock:
+  
+	```level[2] = 1```
+
+	```victim[1] = 2```
+- Dupa while Thread 2 este blocat
+
+4. Thread 0 trece prin sectiunea critica si da call la unlock:
+  
+	```level[0] = 0```
+
+5. Thread 1 e deblocat si intra in sectiunea critica
+
+6. Thread 2 este in continuare blocat deoarece in continuare ```victim[1] = 2```
+
+In acest scenariu Thread 0 va intra in sectiunea critica inainte de Thread 2 in sectiunea critica. Deci acest algortim este unfair.
+
+In codul propus, am adaugat un array de turns, unde fiecare thread incrementeaza pe baza accesului in lock si este adaugata o conditie noua in while ce verifica daca exista vreun thread care a asteptat deja mai mult decat altul. Aceste modificari fac algoritmul lui Peterson fair. Am atasat si rezultatele in urma executiei cu 3 thread-uri si un contor partajat cu limita 150000.
+
 ![image](https://github.com/user-attachments/assets/5d1b937f-a8b1-4d5b-a80c-7e83d196f5e4)
 
