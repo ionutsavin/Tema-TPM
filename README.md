@@ -101,3 +101,7 @@ nevoit sa se intoarca si sa aleaga white).
 Deci, datorita faptului ca atribuirea ```getWhite = true;``` poate fi facuta de un singur thread, doar acesta va putea alege culoarea rosu, iar restul vor fi nevoite sa aleaga alb. 
 
 ![image](https://github.com/user-attachments/assets/d4d241d9-d4c9-4a31-9b1c-140a871124e8)
+
+# Exercitiul 5
+![image](https://github.com/user-attachments/assets/5d1b937f-a8b1-4d5b-a80c-7e83d196f5e4)
+
